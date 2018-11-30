@@ -1,4 +1,4 @@
-# sznlp_admin
+# vue_coreui_admin
 
 > A Vue.js project
 
