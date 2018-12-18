@@ -1,13 +1,9 @@
 <template>
   <AppHeaderDropdown right no-caret>
-    <template slot="header">
-      <img
-        src="@/img/avatars/6.jpg"
-        class="img-avatar"
-        alt="admin@bootstrapmaster.com" />
+    <template slot="header">用户:{{cname}}&nbsp;&nbsp;
     </template>\
     <template slot="dropdown">
-      <b-dropdown-item><i class="fa fa-lock" /> Logout</b-dropdown-item>
+      <b-dropdown-item @click="logout"><i class="fa fa-lock"  />注销</b-dropdown-item>
     </template>
   </AppHeaderDropdown>
 </template>
@@ -20,7 +16,19 @@ export default {
     AppHeaderDropdown
   },
   data: () => {
-    return { itemsCount: 42 }
-  }
+    return { itemsCount: 42,name:"" }
+  },
+  computed: {
+    cname(){
+      return this.$mycommon.getUinfo()["name"]
+    }
+  },
+  methods: {
+    logout(){
+      this.$mycommon.delCookie('token');
+      this.$router.push({ path: '/page/login' })
+    }
+  },
+
 }
 </script>

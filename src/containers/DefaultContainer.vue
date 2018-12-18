@@ -38,6 +38,7 @@
       <div class="ml-auto">
         cbdeng<span class="ml-1">&copy;2018</span>
       </div>
+
     </TheFooter>
   </div>
 </template>
@@ -47,6 +48,46 @@ import nav from '@/_nav'
 import { Header as AppHeader, SidebarToggler, Sidebar as AppSidebar, SidebarFooter, SidebarForm, SidebarHeader, SidebarMinimizer, SidebarNav, Aside as AppAside, AsideToggler, Footer as TheFooter, Breadcrumb } from '@coreui/vue'
 import DefaultAside from './DefaultAside'
 import DefaultHeaderDropdownAccnt from './DefaultHeaderDropdownAccnt'
+
+
+var e_task_route = {
+  name: '任务',
+  url: '/task',
+  icon: 'icon-puzzle',
+  children: [
+    {
+      name: '任务列表',
+      url: '/task/list',
+      icon: 'icon-list',
+    },
+  ]
+}
+
+
+var e_job_route = {
+  name: '工作',
+  url: '/job',
+  icon: 'icon-puzzle',
+  children: [
+    {
+      name: '我的工作列表',
+      url: '/job/list',
+      icon: 'icon-list',
+    },
+  ]
+}
+
+var e_nav_list = [
+    {
+      name: '首页',
+      url: '/',
+      icon: 'icon-speedometer',
+      badge: {
+        // variant: 'primary',
+        // text: 'NEW'
+      }
+    },
+  ]
 
 export default {
   name: 'DefaultContainer',
@@ -68,7 +109,9 @@ export default {
   },
   data () {
     return {
-      nav: nav.items
+      nav: nav.items,
+      dangerMsg:"",
+      dangerModal:false
     }
   },
   computed: {
@@ -77,7 +120,29 @@ export default {
     },
     list () {
       return this.$route.matched.filter((route) => route.name || route.meta.label )
+    },
+  },
+  mounted:function(){
+    var uinfo= JSON.parse(this.$mycommon.getCookie("uinfo"))
+
+    var task_route = this.$jQuery.extend(true, {}, e_task_route)
+    var job_route = this.$jQuery.extend(true, {}, e_job_route)
+    var nav_list = this.$jQuery.extend(true, [], e_nav_list)
+    if ([1, 2].indexOf(uinfo.cate) >= 0){
+      task_route["children"].push({
+          name: '任务发布',
+          url: '/task/create',
+          icon: 'icon-cursor'
+        })
+      job_route["children"].push({
+          name: '工作完成情况',
+          url: '/job/done_list',
+          icon: 'icon-layers'
+        })
     }
-  }
+    nav_list.push(task_route)
+    nav_list.push(job_route)
+    this.nav = nav_list
+  },
 }
 </script>

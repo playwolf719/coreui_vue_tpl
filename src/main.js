@@ -9,20 +9,26 @@ import App from './App'
 import router from './router'
 /* eslint-disable */
 // element-ui
-import { Container,Row,Col,Header,Aside,Main,RadioGroup,RadioButton,Menu,Submenu,MenuItem,MenuItemGroup,Form,FormItem,Input,Button ,Alert,Tag,Checkbox} from 'element-ui';
-Vue.use(Row);Vue.use(Col);
-Vue.use(Container);Vue.use(Header);Vue.use(Aside);Vue.use(Main);
-Vue.use(RadioGroup);Vue.use(RadioButton);
-Vue.use(Menu);Vue.use(Submenu);Vue.use(MenuItem);Vue.use(MenuItemGroup);
-Vue.use(Form);Vue.use(FormItem);Vue.use(Input);Vue.use(Button);
-Vue.use(Alert);
-Vue.use(Tag);
-Vue.use(Checkbox);
+// import { Container,Row,Col,Header,Aside,Main,RadioGroup,RadioButton,Menu,Submenu,MenuItem,MenuItemGroup,Form,FormItem,Input,Button ,Alert,Tag,Checkbox} from 'element-ui';
+// Vue.use(Row);Vue.use(Col);
+// Vue.use(Container);Vue.use(Header);Vue.use(Aside);Vue.use(Main);
+// Vue.use(RadioGroup);Vue.use(RadioButton);
+// Vue.use(Menu);Vue.use(Submenu);Vue.use(MenuItem);Vue.use(MenuItemGroup);
+// Vue.use(Form);Vue.use(FormItem);Vue.use(Input);Vue.use(Button);
+// Vue.use(Alert);
+// Vue.use(Tag);
+// Vue.use(Checkbox);
 
 // bootstrap-vue
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
+import axios from 'axios';
+Object.defineProperty(Vue.prototype, '$axios', { value: axios });
+
+// var VueCookie = require('vue-cookie');
+// Vue.use(VueCookie);
+// other js
 import jQuery from 'jquery'
 Object.defineProperty(Vue.prototype, '$jQuery', { value: jQuery });
 import mycommon from '@/lib/mycommon.js'
