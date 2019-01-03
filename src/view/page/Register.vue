@@ -122,6 +122,11 @@ export default {
       }
       return flag
     },
+    after_do(data){
+      this.dangerModal = true
+      this.dangerMsg = data.msg
+      this.code = data.code
+    },
     submit(){
       if (this.validate()){
         var postBody = {
@@ -132,24 +137,7 @@ export default {
             "password":this.form.password
           }
         }
-        this.$axios.post('/dh/index', postBody)
-        .then(response => {
-          var data = response.data
-          console.log(data)
-          if(data.code){
-            this.dangerModal = true
-            this.dangerMsg = data.msg
-          }else{
-            this.dangerModal = true
-            this.dangerMsg = data.msg
-            this.code = data.code
-          }
-        })
-        .catch(e => {
-           this.dangerModal = true
-           this.dangerMsg = "请稍后再试！"
-          console.log(e);
-        })
+        this.$mycommon.postCommonInter(this,postBody,"create",this.after_do)
       }
     }
   }

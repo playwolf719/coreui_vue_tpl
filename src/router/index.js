@@ -118,6 +118,7 @@ const router = new Router({
 
 router.beforeEach((to, from, next) => {
     var token = mycommon.getCookie('token')
+    console.log("token",token)
     if (!token) {
       if (['/page/login',"/page/register"].indexOf(to.path) < 0) {
             return next({path: '/page/login'});

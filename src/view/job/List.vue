@@ -15,6 +15,9 @@
       </b-col>
 </b-row>
     <b-table striped hover :items="items" :fields="fields" @sort-changed="sortChanged"  :no-local-sorting="bool_true">
+      <template slot="content" slot-scope="data">
+         <div v-for="(input, index) in data.value" ><strong>{{input["name"]}}:</strong> {{input["value"]}}</div>
+      </template>
       <template slot="oper" slot-scope="data">
         <a href="#"   @click="delItem(data.item.id)"  ><i class="fa fa-trash" /></a>
       </template>
@@ -47,6 +50,14 @@ export default {
           label: '任务名称',
           sortable: false
         },
+        content: {
+          label: '作业内容',
+          sortable: false,
+          formatter: (value, key, item) => {
+            var tmp = JSON.parse(value)
+            return tmp
+          }
+        },
         create_time: {
           label: '创建时间',
           formatter: (value, key, item) => {
@@ -69,7 +80,7 @@ export default {
       dangerModal:false,
       cur_page:1,
       total_count:0,
-      count:5,
+      count:10,
       is_auth:0,
       offset:0,
       sortBy:"id",

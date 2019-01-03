@@ -1,4 +1,4 @@
-
+import g_var from "./g_var"
 var mycommon_base = {
   isEmpty(str) {
     return (!str || 0 === str.length);
@@ -44,13 +44,14 @@ var mycommon_base = {
     return year + "-" + month + "-" + date+" "+hour+":"+minute+":"+second;
   },
   postCommonInter(myThis,postBody,cate="list",callback=undefined){
-    var cate_list = ["list","update","insert","logicDel","one"]
+    var cate_list = ["list","update","insert","logicDel","one","custom"]
     if (callback===undefined) {
       if (cate_list.indexOf(cate)==-1) {
         throw "[postCommonInter]cate out of range";
       }
     }
-    myThis.$axios.post('/dh/index', postBody)
+    myThis.$axios.defaults.withCredentials = true;
+    myThis.$axios.post(g_var["G_HOST"]+'/sznlp_admin/backend/dh/index', postBody,)
     .then(response => {
       var ret = response.data
       console.log(ret)

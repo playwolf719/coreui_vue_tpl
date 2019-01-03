@@ -6,19 +6,17 @@
 
             <b-form-group
               label="任务名称"
-              label-for="horizEmail"
               description=""
               :label-cols="2"
-              :horizontal="true">
-              <b-col sm="6"><b-form-input id="horizEmail" type="text" placeholder="" autocomplete="" v-model="name" readonly></b-form-input></b-col>
+              :horizontal="true" >
+              <b-col sm="6" class="padtmp">{{ this.name }}</b-col>
             </b-form-group>
             <b-form-group
               label="任务描述"
-              label-for="horizEmail"
               description=""
               :label-cols="2"
-              :horizontal="true">
-              <b-col sm="6"><b-form-input id="horizEmail" type="text" placeholder="" autocomplete="" v-model="desc" readonly></b-form-input></b-col>
+              :horizontal="true" >
+              <b-col sm="6" class="padtmp">{{ this.desc }}</b-col>
             </b-form-group>
 
 
@@ -27,18 +25,17 @@
               <b-row>
                 <b-col sm="2">
                   <b-form-group label="字段名" >
-                    <b-form-input type="text"  placeholder="" v-model="input.name"    readonly></b-form-input>
+                    {{ input.name }}
                   </b-form-group>
                 </b-col>
                 <b-col sm="3">
                   <b-form-group label="描述">
-                    <b-form-input type="text" placeholder="" v-model="input.desc" readonly></b-form-input>
-                  </b-form-group>
+                    {{ input.desc }}</b-form-group>
                 </b-col>
 
                 <b-col sm="3">
                   <b-form-group label="值">
-                    <b-form-input type="text" placeholder="" v-model="input.value" @blur.native = "validate"></b-form-input>
+                    <b-form-input type="text" placeholder=""  ref="myTest" v-model="input.value" @blur.native = "validate" ></b-form-input>
                   </b-form-group>
                 </b-col>
 
@@ -58,7 +55,7 @@
         </b-card>
       </b-col>
 
-    <b-modal title="提示" class="modal-info" v-model="dangerModal" @ok="dangerModal = false" ok-variant="info">{{dangerMsg}}
+    <b-modal title="提示"  class="modal-info" v-model="dangerModal" @ok="handleEnter" hide-header-close ok-only @keydown.native.enter="handleEnter" ok-variant="info">{{dangerMsg}}
       </b-modal>
     </b-row>
 </template>
@@ -78,7 +75,19 @@ export default {
       origin_list:[]
     }
   },
+  directives: {
+    focus: {
+      // directive definition
+      inserted: function (el) {
+        el.focus()
+      }
+    }
+  },
   methods:{
+    handleEnter(){
+      this.dangerModal = false
+      this.$nextTick(() => this.$refs["myTest"][0].focus())
+    },
     after_load_data(ret){
       var data = ret.data
       if (data.data_list){
@@ -89,7 +98,7 @@ export default {
         for (var x in this.origin_list){
           this.origin_list[x]["value"] = ""
         }
-        this.field_list = this.$jQuery.extend(true, {}, this.origin_list);
+        this.field_list = this.$jQuery.extend(true, [], this.origin_list);
       }
     },
     after_create_data(ret){
@@ -114,7 +123,7 @@ export default {
       }
     },
     reset(){
-      this.field_list = this.$jQuery.extend(true, {}, this.origin_list);
+      this.field_list = this.$jQuery.extend(true, [], this.origin_list);
     },
     validate(){
       var flag = true
@@ -148,4 +157,7 @@ export default {
 
 </script>
 <style>
+.padtmp {
+  padding:"5px";
+}
 </style>

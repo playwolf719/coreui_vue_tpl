@@ -79,6 +79,14 @@ export default {
       }
       return flag
     },
+    after_login(data){
+      //this.dangerModal = true
+      //this.dangerMsg = data.msg
+      this.$mycommon.setCookie("token",data.data.token,3500)
+      var tmp = JSON.stringify(data.data)
+      this.$mycommon.setCookie("uinfo",tmp,3500)
+      this.$router.push('/')
+    },
     submit(){
       if (this.validate()){
         var postBody = {
@@ -89,27 +97,7 @@ export default {
             "password":this.form.password
           }
         }
-        this.$axios.post('/dh/index', postBody)
-        .then(response => {
-          var data = response.data
-          console.log(data)
-          if(data.code){
-            this.dangerModal = true
-            this.dangerMsg = data.msg
-          }else{
-            this.dangerModal = true
-            this.dangerMsg = data.msg
-            this.$mycommon.setCookie("token",data.data.token,3500)
-            var tmp = JSON.stringify(data.data)
-            this.$mycommon.setCookie("uinfo",tmp,3500)
-            this.$router.push('/')
-          }
-        })
-        .catch(e => {
-           this.dangerModal = true
-           this.dangerMsg = "请稍后再试！"
-           console.log(e);
-        })
+        this.$mycommon.postCommonInter(this,postBody,"one",this.after_login)
       }
     }
    }

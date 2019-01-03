@@ -59,7 +59,7 @@ export default {
       dangerModal:false,
       cur_page:1,
       total_count:0,
-      count:5,
+      count:10,
       is_auth:0,
       offset:0,
       sortBy:"id",

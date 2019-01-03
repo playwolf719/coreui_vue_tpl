@@ -106,6 +106,11 @@ export default {
       var newObject = this.$jQuery.extend(true, {}, e_field);
       this.inputs.push(newObject)
     },
+    after_create_data(data){
+      this.dangerMsg = data.msg
+      this.dangerModal = true
+      this.$router.push('list')
+    },
     create(){
       if (this.validate()){
         var postBody = {
@@ -117,23 +122,7 @@ export default {
             "field_list":this.inputs
           }
         }
-        this.$axios.post('/dh/index', postBody)
-        .then(response => {
-          var data = response.data
-          if(data.code){
-            this.dangerModal = true
-            this.dangerMsg = data.msg
-          }else{
-            this.dangerModal = true
-            this.dangerMsg = data.msg
-            this.$router.push('list')
-          }
-        })
-        .catch(e => {
-            console.log(e);
-            this.dangerModal = true
-            this.dangerMsg = "请稍后再试！"
-        })
+        this.$mycommon.postCommonInter(this,postBody,"create",this.after_create_data)
       }
     },
     delField(index){

@@ -17,6 +17,7 @@
     <b-table striped hover :items="items" :fields="fields" @sort-changed="sortChanged"  :no-local-sorting="bool_true">
       <template slot="oper" slot-scope="data">
         <a href="#"   @click="chkUserDoneList(data.item.task_id)"  title="用户完成情况"><i class="fa fa-list" /></a>
+        <a href="#"   @click="downData(data.item.task_id)"  title="下载相关数据"><i class="fa fa-download" /></a>
       </template>
     </b-table>
 
@@ -62,7 +63,7 @@ export default {
       dangerModal:false,
       cur_page:1,
       total_count:0,
-      count:5,
+      count:10,
       is_auth:0,
       offset:0,
       sortBy:"task_id",
@@ -100,6 +101,16 @@ export default {
     },
     chkUserDoneList(tid){
       this.$router.push({ name: '用户工作完成情况', params: { taskId: tid }})
+    },
+    downData(tid){
+      var postBody = {
+        "oper":"down_onetask_data",
+        "ent":"job",
+        "info":{
+          "task_id":tid
+        }
+      }
+      this.$mycommon.postCommonInter(this,postBody,"custom");
     },
     mytest(data){
       var arr = JSON.parse(data)
