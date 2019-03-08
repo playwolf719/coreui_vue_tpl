@@ -21,6 +21,16 @@
               <b-col sm="6"><b-form-input id="horizPass" type="text" placeholder=""  v-model="form.desc" @blur.native = "validate" ></b-form-input></b-col>
               <b-col sm="4" ><font v-if="form.desc_tip" color="red" size="2">{{form.desc_tip}}</font></b-col>
             </b-form-group>
+
+            <b-row >
+              <b-col  >
+                <multiselect v-model="value_list" :options="options" :multiple="true" :close-on-select="false" open-direction="bottom" :clear-on-select="false" :preserve-search="true" placeholder="请输入用户名（非必选）" label="name" track-by="name" :preselect-first="false" :taggable="true">
+  </multiselect>
+
+              </b-col>
+            </b-row>
+            <br/>
+
             <b-row >
               <b-col sm="4" offset-sm="4" ><font v-if="form.field_tip" color="red" size="2">{{form.field_tip}}</font></b-col>
             </b-row>
@@ -76,6 +86,8 @@
   padding:15px;
 }
 </style>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 <script>
 var e_form = {
         name: '',
@@ -98,10 +110,25 @@ export default {
       form: this.$jQuery.extend(true, {}, e_form),
       inputs:[],
       dangerModal:false,
-      dangerMsg:""
+      dangerMsg:"",
+      value_list: [],
+      options: [
+      ]
     }
   },
   methods: {
+    fill_userlist(res){
+      this.options = res.data.data_list
+    },
+    load_userlist(){
+      var postBody = {
+        "oper":"userlist",
+        "ent":"user",
+        "info":{
+        }
+      }
+      this.$mycommon.postCommonInter(this,postBody,"custom",this.fill_userlist);
+    },
     addField(){
       var newObject = this.$jQuery.extend(true, {}, e_field);
       this.inputs.push(newObject)
@@ -113,13 +140,18 @@ export default {
     },
     create(){
       if (this.validate()){
+        var user_list = []
+        for ( var key in this.value_list) {
+          user_list.push(this.value_list[key]["id"])
+        }
         var postBody = {
           "oper":"create",
           "ent":"task",
           "info":{
             "name":this.form.name,
             "desc":this.form.desc,
-            "field_list":this.inputs
+            "field_list":this.inputs,
+            "user_list":user_list
           }
         }
         this.$mycommon.postCommonInter(this,postBody,"create",this.after_create_data)
@@ -171,6 +203,10 @@ export default {
       }
       return flag
     }
-  }
+  },
+
+  mounted(){
+    this.load_userlist();
+  },
 }
 </script>

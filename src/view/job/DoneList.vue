@@ -17,7 +17,6 @@
     <b-table striped hover :items="items" :fields="fields" @sort-changed="sortChanged"  :no-local-sorting="bool_true">
       <template slot="oper" slot-scope="data">
         <a href="#"   @click="chkUserDoneList(data.item.task_id)"  title="用户完成情况"><i class="fa fa-list" /></a>
-        <a href="#"   @click="downData(data.item.task_id)"  title="下载相关数据"><i class="fa fa-download" /></a>
       </template>
     </b-table>
 
@@ -76,8 +75,12 @@ export default {
     filter:{
         handler: function (val, oldVal) {
           this.filter_where = ""
-          if(val ){
-            this.filter_where = this.selected + " = " +val
+          var flag = false;
+          if(val){
+            if(this.selected == "task_id" && !isNaN(val) ){
+              flag = true;
+              this.filter_where = this.selected + " = " +val
+            }
           }
           this.load_data()
         }
@@ -85,7 +88,6 @@ export default {
   },
   methods:{
     selectChange(ctx){
-      console.log(ctx)
       this.filter = null
     },
     sortChanged(ctx){

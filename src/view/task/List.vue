@@ -104,7 +104,7 @@ export default {
         "info":{
           "count":this.count,
           "offset":this.offset,
-          "where":"status=0"
+          "where":"status=0 and is_some=0"
         }
       }
       if (this.sortBy){

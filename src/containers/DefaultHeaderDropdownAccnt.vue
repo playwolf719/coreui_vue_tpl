@@ -25,6 +25,7 @@ export default {
   },
   methods: {
     logout(){
+      console.log("logout")
       this.$mycommon.delCookie('token');
       this.$mycommon.delCookie('uinfo');
       this.$router.push({ path: '/page/login' })

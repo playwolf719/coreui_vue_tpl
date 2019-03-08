@@ -35,7 +35,7 @@
 
                 <b-col sm="3">
                   <b-form-group label="值">
-                    <b-form-input type="text" placeholder=""  ref="myTest" v-model="input.value" @blur.native = "validate" ></b-form-input>
+                    <b-form-textarea  type="text" placeholder="" :rows="2" :max-rows="6"  ref="myTest" v-model="input.value" @blur.native = "validate" ></b-form-textarea>
                   </b-form-group>
                 </b-col>
 

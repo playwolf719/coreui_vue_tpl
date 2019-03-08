@@ -4,6 +4,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Index from '@/components/Index'
 import TaskCreate from '@/view/task/Create1'
 import TaskList from '@/view/task/List'
+import MyTaskList from '@/view/task/MyList'
 import JobCreate  from '@/view/job/Create'
 import JobList  from '@/view/job/List'
 import JobDoneList  from '@/view/job/DoneList'
@@ -47,8 +48,13 @@ const router = new Router({
             },
             {
               path: 'list',
-              name: '任务列表',
+              name: '公共任务列表',
               component: TaskList
+            },
+            {
+              path: 'mylist',
+              name: '我的任务列表',
+              component: MyTaskList
             },
           ]
         },

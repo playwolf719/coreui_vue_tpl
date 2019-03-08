@@ -56,7 +56,12 @@ var e_task_route = {
   icon: 'icon-puzzle',
   children: [
     {
-      name: '任务列表',
+      name: '我的任务列表',
+      url: '/task/mylist',
+      icon: 'icon-puzzle'
+    },
+    {
+      name: '公共任务列表',
       url: '/task/list',
       icon: 'icon-list',
     },

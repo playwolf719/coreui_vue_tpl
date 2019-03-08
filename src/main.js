@@ -23,6 +23,7 @@ import router from './router'
 import BootstrapVue from 'bootstrap-vue'
 Vue.use(BootstrapVue)
 
+
 import axios from 'axios';
 Object.defineProperty(Vue.prototype, '$axios', { value: axios });
 
@@ -33,6 +34,9 @@ import jQuery from 'jquery'
 Object.defineProperty(Vue.prototype, '$jQuery', { value: jQuery });
 import mycommon from '@/lib/mycommon.js'
 Object.defineProperty(Vue.prototype, '$mycommon', { value: mycommon });
+
+import Multiselect from 'vue-multiselect'
+Vue.component('multiselect', Multiselect)
 
 Vue.config.productionTip = false
 

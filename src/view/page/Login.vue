@@ -82,9 +82,9 @@ export default {
     after_login(data){
       //this.dangerModal = true
       //this.dangerMsg = data.msg
-      this.$mycommon.setCookie("token",data.data.token,3500)
+      this.$mycommon.setCookie("token",data.data.token,3600*23.5)
       var tmp = JSON.stringify(data.data)
-      this.$mycommon.setCookie("uinfo",tmp,3500)
+      this.$mycommon.setCookie("uinfo",tmp,3600*23.5)
       this.$router.push('/')
     },
     submit(){

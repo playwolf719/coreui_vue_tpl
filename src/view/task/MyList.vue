@@ -1,25 +1,13 @@
 <template>
 <div>
 
-<b-row>
-      <b-col md="6" >
-        <b-form-group horizontal label="过滤" >
-          <b-input-group>
-            <b-form-select v-model="selected" :options="options" @input="selectChange" />
-            <b-form-input v-model="filter" placeholder="" />
-            <b-input-group-append>
-              <b-btn :disabled="!filter" @click="filter = ''">清除</b-btn>
-            </b-input-group-append>
-          </b-input-group>
-        </b-form-group>
-      </b-col>
-</b-row>
     <b-table striped hover :items="items" :fields="fields" @sort-changed="sortChanged"  :no-local-sorting="bool_true">
-      <template slot="content" slot-scope="data">
-         <div v-for="(input, index) in data.value" ><strong>{{input["name"]}}:</strong> {{input["value"]}}</div>
+      <template slot="field_list" slot-scope="data">
+         <div v-for="(input, index) in data.value" ><strong>字段{{index+1}}：</strong> {{input["name"]}}</div>
       </template>
       <template slot="oper" slot-scope="data">
-        <a href="#"   @click="delItem(data.item.id)"  ><i class="fa fa-trash" /></a>
+        <a href="#"   @click="doTask(data.item.id)"  ><i class="fa fa-edit" title="做任务" /></a>
+        <a href="#"  v-if="is_auth" @click="delTask(data.item.id)"  ><i class="fa fa-trash" /></a>
       </template>
     </b-table>
 
@@ -39,24 +27,20 @@ export default {
     return {
       fields: {
         id: {
-          label: '作业ID',
+          label: 'ID',
           sortable: true
         },
-        task_id: {
-          label: '任务ID',
+        name: {
+          label: '名称',
           sortable: true
         },
-        task_name: {
-          label: '任务名称',
-          sortable: false
+        desc: {
+          label: '描述',
+          sortable: true
         },
-        content: {
-          label: '作业内容',
-          sortable: false,
-          formatter: (value, key, item) => {
-            var tmp = JSON.parse(value)
-            return tmp
-          }
+        field_list: {
+          label: '字段描述',
+          formatter: "mytest"
         },
         create_time: {
           label: '创建时间',
@@ -69,13 +53,8 @@ export default {
           label: '操作',
         }
       },
-      selected:"task_id",
-      options: [
-        { value: "task_id", text: '任务ID' },
-      ],
       items: [
       ],
-      filter: null,
       dangerMsg:"",
       dangerModal:false,
       cur_page:1,
@@ -85,29 +64,10 @@ export default {
       offset:0,
       sortBy:"id",
       sortDesc:true,
-      bool_true:true,
-      filter_where:""
-    }
-  },
-  watch : {
-    filter:{
-        handler: function (val, oldVal) {
-          this.filter_where = ""
-          var flag = false;
-          if(val){
-            if(this.selected == "task_id" && !isNaN(val) ){
-              flag = true;
-              this.filter_where = this.selected + " = " +val
-            }
-          }
-          this.load_data()
-        }
+      bool_true:true
     }
   },
   methods:{
-    selectChange(ctx){
-      this.filter = null
-    },
     sortChanged(ctx){
       this.sortBy = ctx.sortBy
       if (this.sortBy){
@@ -119,16 +79,19 @@ export default {
       this.offset = (page-1)*this.count
       this.load_data()
     },
-    delItem(id){
+    delTask(id){
       var postBody = {
-        "oper":"updatemy",
-        "ent":"job",
+        "oper":"update",
+        "ent":"task",
         "info":{
           "status":1,
           "ct_where":"id = "+id+" and status=0"
         }
       }
       this.$mycommon.postCommonInter(this,postBody,"update",this.load_data);
+    },
+    doTask(id){
+      this.$router.push({ name: '做任务', params: { taskId: id }})
     },
     mytest(data){
       var arr = JSON.parse(data)
@@ -137,15 +100,11 @@ export default {
     load_data(){
       var postBody = {
         "oper":"querymy",
-        "ent":"job",
+        "ent":"task",
         "info":{
           "count":this.count,
-          "offset":this.offset,
-          "where":"status=0 "
+          "offset":this.offset
         }
-      }
-      if (this.filter_where){
-        postBody["info"]["where"] = postBody["info"]["where"]  + " and " + this.filter_where
       }
       if (this.sortBy){
         postBody["info"]["order_by"] = [
@@ -159,7 +118,7 @@ export default {
     },
   },
   mounted(){
-    this.uid = this.$mycommon.getUinfo()["id"]
+    this.is_auth = this.$mycommon.isAuth()
     this.load_data();
   },
 

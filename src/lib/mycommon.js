@@ -89,7 +89,7 @@ var mycommon_mid = {
   },
   isAuth(){
     var uinfo = JSON.parse(mycommon_base.getCookie("uinfo"))
-    if(uinfo["cate"] in [1,2]){
+    if([1,2].includes(uinfo["cate"])){
       return true
     }
     return false

@@ -72,8 +72,12 @@ export default {
     filter:{
         handler: function (val, oldVal) {
           this.filter_where = ""
-          if(val ){
-            this.filter_where = this.selected + " = " +val
+          var flag = false;
+          if(val){
+            if(this.selected == "user_id" && !isNaN(val) ){
+              flag = true;
+              this.filter_where = this.selected + " = " +val
+            }
           }
           this.load_data()
         }
