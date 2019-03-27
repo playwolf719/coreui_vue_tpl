@@ -97,6 +97,9 @@ export default {
         this.origin_list = JSON.parse(one.field_list)
         for (var x in this.origin_list){
           this.origin_list[x]["value"] = ""
+          if (this.origin_list[x].defVal){
+            this.origin_list[x]["value"] = this.origin_list[x].defVal
+          }
         }
         this.field_list = this.$jQuery.extend(true, [], this.origin_list);
       }

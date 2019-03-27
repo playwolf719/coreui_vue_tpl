@@ -42,9 +42,17 @@
                     <b-form-input type="text"  placeholder="" v-model="input.name"  @blur.native = "validate"   ></b-form-input>
                   </b-form-group>
                 </b-col>
+
                 <b-col sm="3">
                   <b-form-group label="描述">
                     <b-form-input type="text" placeholder="" v-model="input.desc" @blur.native = "validate"></b-form-input>
+                  </b-form-group>
+                </b-col>
+
+
+                <b-col sm="3">
+                  <b-form-group label="默认值">
+                    <b-form-input type="text" placeholder="" v-model="input.defVal" @blur.native = "validate"></b-form-input>
                   </b-form-group>
                 </b-col>
 
@@ -99,6 +107,7 @@ var e_form = {
 var e_field= {
         name: '',
         desc:'',
+        defVal:'',
         checked:[],
         tip:''
       }
