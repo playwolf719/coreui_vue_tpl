@@ -11,6 +11,8 @@ import JobDoneList  from '@/view/job/DoneList'
 import JobUserDoneList  from '@/view/job/UserDoneList'
 import Login from '@/view/page/Login'
 import Register from '@/view/page/Register'
+import Page404 from '@/view/page/Page404'
+import QA from '@/view/page/QA'
 import mycommon from '@/lib/mycommon.js'
 
 const DefaultContainer = () => import('@/containers/DefaultContainer')
@@ -107,11 +109,18 @@ const router = new Router({
           path: 'register',
           component: Register
         },
-        // {
-        //   name: 'Error 404',
-        //   path: '/404',
-        //   icon: 'icon-star'
-        // },
+        {
+
+          name: '404',
+          path: '404',
+          component: Page404
+        },
+        {
+
+          name: 'QA',
+          path: 'qa',
+          component: QA
+        },
         // {
         //   name: 'Error 500',
         //   path: '/500',
@@ -126,16 +135,16 @@ router.beforeEach((to, from, next) => {
     var token = mycommon.getCookie('token')
     console.log("token",token)
     if (!token) {
-      if (['/page/login',"/page/register"].indexOf(to.path) < 0) {
+      if (['/page/login',"/page/404","/page/qa"].indexOf(to.path) < 0) {
             return next({path: '/page/login'});
-        }else {
-            next();
-        }
+      }else {
+        return next();
+      }
     }else {
-        if (to.path === '/page/login') {
-            return next({path: '/'});
-        }
-        next();
+      if (to.path === '/page/login') {
+        return next({path: '/'});
+      }
+      return next();
     }
 });
 

@@ -12,17 +12,25 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/sznlp_admin': {
-          target: 'http://192.168.10.161:10099/', // 设置你调用的接口域名和端口号
-          changeOrigin: true,     // 跨域
-          pathRewrite: {
-            '^/sznlp_admin': '/sznlp_admin'
-          }
+        target: 'http://192.168.10.161:10099/', // 设置你调用的接口域名和端口号
+        changeOrigin: true,     // 跨域
+        pathRewrite: {
+          '^/sznlp_admin': '/sznlp_admin'
         }
+      },
+      '/demo': {
+        target: 'http://192.168.10.161:10081/', // 设置你调用的接口域名和端口号
+        changeOrigin: true,     // 跨域
+        pathRewrite: {
+          '^/demo': '/'
+        }
+      },
+
       },
 
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST
-    port: 8082, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
+    port: 8090, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined
     autoOpenBrowser: false,
     errorOverlay: true,
     notifyOnErrors: true,
