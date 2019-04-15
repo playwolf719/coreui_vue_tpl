@@ -53,17 +53,17 @@ import DefaultHeaderDropdownAccnt from './DefaultHeaderDropdownAccnt'
 var e_task_route = {
   name: '任务',
   url: '/task',
-  icon: 'icon-puzzle',
+  icon: 'icon-info',
   children: [
     {
       name: '我的任务列表',
       url: '/task/mylist',
-      icon: 'icon-puzzle'
+      // icon: 'icon-puzzle'
     },
     {
       name: '公共任务列表',
       url: '/task/list',
-      icon: 'icon-list',
+      // icon: 'icon-list',
     },
   ]
 }
@@ -77,7 +77,24 @@ var e_job_route = {
     {
       name: '我的工作列表',
       url: '/job/list',
-      icon: 'icon-list',
+      // icon: 'icon-list',
+    },
+  ]
+}
+var e_search_route = {
+  name: '数据检索',
+  url: '/search',
+  icon: 'icon-cursor',
+  children: [
+    {
+      name: '数据录入',
+      url: '/search/create',
+      // icon: 'icon-list',
+    },
+    {
+      name: '检索列表',
+      url: '/search/list',
+      // icon: 'icon-list',
     },
   ]
 }
@@ -132,18 +149,20 @@ export default {
 
     var task_route = this.$jQuery.extend(true, {}, e_task_route)
     var job_route = this.$jQuery.extend(true, {}, e_job_route)
+    var search_route = this.$jQuery.extend(true, [], e_search_route)
     var nav_list = this.$jQuery.extend(true, [], e_nav_list)
-    if ([1, 2].indexOf(uinfo.cate) >= 0){
+    if ([1, 2,3].indexOf(uinfo.cate) >= 0){
       task_route["children"].push({
           name: '任务发布',
           url: '/task/create',
-          icon: 'icon-cursor'
+          // icon: 'icon-cursor'
         })
       job_route["children"].push({
           name: '工作完成情况',
           url: '/job/done_list',
-          icon: 'icon-layers'
+          // icon: 'icon-layers'
         })
+      nav_list.push(search_route)
     }
     nav_list.push(task_route)
     nav_list.push(job_route)

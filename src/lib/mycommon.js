@@ -12,6 +12,14 @@ var mycommon_base = {
     }
     return false
   },
+  isJsonString(str) {
+    try {
+      JSON.parse(str);
+    } catch (e) {
+      return false;
+    }
+    return true;
+  },
   setCookie(cname,cvalue,exseconds){
     var d = new Date();
     d.setTime(d.getTime()+(exseconds*1000));

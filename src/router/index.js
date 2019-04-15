@@ -5,6 +5,8 @@ import Index from '@/components/Index'
 import TaskCreate from '@/view/task/Create1'
 import TaskList from '@/view/task/List'
 import MyTaskList from '@/view/task/MyList'
+import SearchCreate  from '@/view/search/Create'
+import SearchList  from '@/view/search/List'
 import JobCreate  from '@/view/job/Create'
 import JobList  from '@/view/job/List'
 import JobDoneList  from '@/view/job/DoneList'
@@ -57,6 +59,29 @@ const router = new Router({
               path: 'mylist',
               name: '我的任务列表',
               component: MyTaskList
+            },
+          ]
+        },
+
+        {
+          path: '/search',
+          redirect: '/search/create',
+          name: '检索数据',
+          component: {
+            render (c) { return c('router-view') }
+          },
+          children: [
+            {
+              //create前不得加/
+              path: 'create',
+              name: '数据录入',
+              component: SearchCreate
+            },
+            {
+              //create前不得加/
+              path: 'list',
+              name: '检索列表',
+              component: SearchList
             },
           ]
         },
